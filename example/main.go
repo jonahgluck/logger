@@ -1,7 +1,7 @@
 package main
 
 import (
-	"logger/log"
+	log "github.com/jonahgluck/logger/"
 )
 
 func main() {
