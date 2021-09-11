@@ -1,15 +1,14 @@
 package main
 
 import (
-	// log "github.com/jonahgluck/logger"
-	log "logger/log"
+	// logger "github.com/jonahgluck/logger"
+	logger "logger/log"
 )
 
 var settings = []string{
-	// "bold",
 	"none",
 }
 
 func main() {
-    log.Log("Warning:", "magenta", settings)
+    logger.Log("Warning:", "magenta", settings)
 }
