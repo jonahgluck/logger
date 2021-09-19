@@ -11,4 +11,6 @@ var settings = []string{
 
 func main() {
     logger.Log("Warning:", "magenta", settings)
+    logger.Log("Warning:", "", settings)
+    logger.Log("Warning:", "blue", settings)
 }
