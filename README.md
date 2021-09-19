@@ -1,5 +1,4 @@
 # Logger
-### **In Development**
 A simple logger with styling for Golang applications.
 
 ### Installation
