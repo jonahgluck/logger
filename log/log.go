@@ -6,6 +6,7 @@ import (
 	"os"
 	"strings"
     "log"
+    "time"
 )
 
 // reset color to default
@@ -22,6 +23,7 @@ var colors map[string]string = map[string]string{
     "cyan": "\033[36m",
     "white": "\033[37m",
     "reset": "\033[0m",
+    "": "",
 }
 
 // settings for text appearance
@@ -36,16 +38,26 @@ var config map[string]string = map[string]string{
 }
 
 func Log(message string, color string, formatting []string) {
+    currentTime := time.Now()
+    
+    // write message to [date].log
+    f, err := os.OpenFile(currentTime.Format("01-02-2006")+".log",
+	os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
+    if err != nil {
+	    log.Println(err)
+    }
+    defer f.Close()
+
+    if _, err := f.WriteString("[" + color + "] " + message + "\n"); err != nil {
+    	log.Println(err)
+    }
+
     var format string
     color = strings.ToLower(color)
-    if color, ok := colors[color]; ok {
+    if color, okay := colors[color]; okay {
         for i := 0; i < len(formatting); i++ {
-            if formatting[i], ok = config[formatting[i]]; ok {
+            if formatting[i], okay = config[formatting[i]]; okay {
                 format += formatting[i]
-            }else {
-                err := errors.New("invalid type formatting")
-                fmt.Println(err)
-                message=""
             }
         }
         
@@ -56,18 +68,4 @@ func Log(message string, color string, formatting []string) {
         err := errors.New("invalid color")
         fmt.Println(err)
     }
-}
-
-/* 
-    Logging functions
-*/
-func Logs(fileName string){
-    file, err := os.OpenFile(fileName + ".log", os.O_CREATE|os.O_APPEND|os.O_WRONLY, 0644)
-    if err != nil {
-        log.Fatal(err)
-    }
-
-    defer file.Close()
-
-    log.SetOutput(file)
 }
